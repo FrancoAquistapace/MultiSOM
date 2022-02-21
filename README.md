@@ -4,14 +4,14 @@
 
 Multilayer algorithm of Self Organising Maps (also known as Kohonen Networks) implemented in Python for clustering of atomistic samples through unsupervised learning. The program allows the user to select wich per-atom quantities to use for training and application of the network, this quantities must be specified in the LAMMPS input file that is being analysed. The algorithm also requires the user to introduce some of the networks parameters for each layer of SOMs:
 
-- features: Per-atom features that are going to be used for the analysis.
-- scaling: Individual scaling method for each feature.
-- _f_: Fraction of the input data to be used when training the network, must be between 0 and 1.
-- SIGMA: Maximum value of the _sigma_ function, present in the neighbourhood function.
-- ETA: Maximum value of the _eta_ funtion, which acts as the learning rate of the network.
-- N: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
-- Whether to use batched or serial learning for the training process.
-- batch_size: In case the training is performed with batched learning.
+- `features`: Per-atom features that are going to be used for the analysis.
+- `scaling`: Individual scaling method for each feature.
+- `f`: Fraction of the input data to be used when training the network, must be between 0 and 1.
+- `SIGMA`: Maximum value of the _sigma_ function, present in the neighbourhood function.
+- `ETA`: Maximum value of the _eta_ funtion, which acts as the learning rate of the network.
+- `N`: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
+- `Batched`: Whether to use batched or serial learning for the training process.
+- `batch_size`: In case the training is performed with batched learning.
 
 A global parameter that can also be changed is the mapping of the results for every layer. There are currently two options, the 'godel' mapping uses prime number multiplication to encode the groups and subgroups an atom is classified into, while the 'linear' mapping does this by linear interpolation of a given layer based on the results obtained by the previous layer.
 
