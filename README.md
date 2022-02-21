@@ -11,7 +11,7 @@ Multilayer algorithm of Self Organising Maps (also known as Kohonen Networks) im
 - ETA: Maximum value of the _eta_ funtion, which acts as the learning rate of the network.
 - N: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
 - Whether to use batched or serial learning for the training process.
-- B: Batch size, in case the training is performed with batched learning.
+- batch_size: In case the training is performed with batched learning.
 
 A global parameter that can also be changed is the mapping of the results for every layer. There are currently two options, the 'godel' mapping uses prime number multiplication to encode the groups and subgroups an atom is classified into, while the 'linear' mapping does this by linear interpolation of a given layer based on the results obtained by the previous layer.
 
