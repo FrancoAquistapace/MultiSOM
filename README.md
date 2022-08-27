@@ -39,3 +39,8 @@ This software is written in Python 3.8.8 and uses the following external librari
 - Pandas 1.2.4
 
 (Both packages come with the basic installation of Anaconda at: https://www.anaconda.com/)
+
+To run the `main_parallel.py` implementation, an additional dependency is required:
+- joblib 1.0.1
+
+(Which can also be installed through conda)
