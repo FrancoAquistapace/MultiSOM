@@ -23,6 +23,12 @@ Although a single file is used to train the layers, many files can then be analy
 
 `python3 main.py`
 
+Or, to run the parallel implementation of the code, execute the following command in a terminal (again from the folder that conatins the files and with a python environment activated):
+
+`python3 main_parallel.py N_JOBS`
+
+Where `N_JOBS` has to be replaced with the number of jobs desired, given as an integer value.
+
 The algorithm parameters are stored in the `input_params.py` file, and can be changed using any text editor.
 
 Check the software report in the repository for more information.
@@ -33,3 +39,8 @@ This software is written in Python 3.8.8 and uses the following external librari
 - Pandas 1.2.4
 
 (Both packages come with the basic installation of Anaconda at: https://www.anaconda.com/)
+
+To run the `main_parallel.py` implementation, an additional dependency is required:
+- joblib 1.0.1
+
+(Which can also be installed through conda)
