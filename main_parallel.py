@@ -813,7 +813,6 @@ if not len(files) == 0:
         
         
         # Save new file with the results assigned to each atom
-        print('\nWriting results...')
         new_path = 'SOM_' + file
         new_file = open(new_path, 'w')
         
