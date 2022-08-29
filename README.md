@@ -23,7 +23,7 @@ Although a single file is used to train the layers, many files can then be analy
 
 `python3 main.py`
 
-Or, to run the parallel implementation of the code, execute the following command in a terminal (again from the folder that conatins the files and with a python environment activated):
+Or, to run the parallel implementation of the code, execute the following command in a terminal (again from the folder that contains the files and with a python environment activated):
 
 `python3 main_parallel.py N_JOBS`
 
