@@ -141,6 +141,8 @@ def normalize_data(df,features,scaling,min_max_features,training):
                 min_value = norm_df[feat].min()
                 max_value = norm_df[feat].max()
                 delta = max_value - min_value
+                if delta == 0:
+                    delta = 1
                 norm_df[feat] = (norm_df[feat] - min_value) / delta
                 
                 # Save min and max for later
@@ -150,7 +152,8 @@ def normalize_data(df,features,scaling,min_max_features,training):
                 # Perform standard scaling
                 mean = norm_df[feat].mean()
                 std = norm_df[feat].std()
-                
+                if std == 0:
+                    std = 1
                 norm_df[feat] = (norm_df[feat] - mean)/std
                 
                 # Save mean, std, min and max for later
@@ -164,7 +167,8 @@ def normalize_data(df,features,scaling,min_max_features,training):
                 
                 # Estimate IQR
                 iqr = q75 - q25
-                
+                if iqr == 0:
+                    iqr = 1
                 # Get median
                 median = df[feat].median()
                 
