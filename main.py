@@ -244,8 +244,9 @@ def generate_prime(n):
 # We'll need an auxiliary function that maps the results of the secondary 
 # layers of SOMs
 def map_to_cluster_linear(groups_df, c_id, c_next_id, 
-                          use_int=False, max_int=None, min_int=None):
-    '''s
+                          use_int=False, max_int=None, min_int=None,
+                          N=1):
+    '''
 
     Parameters
     ----------
@@ -264,6 +265,9 @@ def map_to_cluster_linear(groups_df, c_id, c_next_id,
     min_int : int or None
         Minimum value to use when mapping a single int. It is only required 
         when use_int is True.
+    N : int
+        Amount of groups to use as (max_val - min_val) when this difference is
+        zero. Default is 1.
 
     Returns
     -------
@@ -276,10 +280,17 @@ def map_to_cluster_linear(groups_df, c_id, c_next_id,
     '''
     if not use_int:
         max_val, min_val = groups_df.max(), groups_df.min()
-        delta = c_next_id - c_id
-        lim = (max_val/(max_val+1))
-        mapped_df = c_id +\
-            delta * lim * (groups_df.copy() - min_val)/(max_val - min_val)
+        # Check that min and max vals are different
+        if max_val - min_val == 0:
+            delta = c_next_id - c_id
+            lim = (N-1) / N
+            mapped_df = c_id +\
+                delta * lim * groups_df.copy() / (N-1)
+        else:
+            delta = c_next_id - c_id
+            lim = (max_val/(max_val+1))
+            mapped_df = c_id +\
+                delta * lim * (groups_df.copy() - min_val)/(max_val - min_val)
         
         return mapped_df
     
@@ -791,7 +802,8 @@ if not len(files) == 0:
                         final_cluster_groups = map_to_cluster_linear(
                             groups_df = cluster_groups, 
                             c_id = cluster_id, 
-                            c_next_id = next_cluster_id)
+                            c_next_id = next_cluster_id,
+                            N = len(found_clusters[i][j]))
                     
                     # Add results to final DataFrame
                     new_df.loc[new_df[prev_layer_name] ==\
