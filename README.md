@@ -13,7 +13,7 @@ Multilayer algorithm of Self Organising Maps (also known as Kohonen Networks) im
 - `Batched`: Whether to use batched or serial learning for the training process.
 - `batch_size`: In case the training is performed with batched learning.
 
-A global parameter that can also be changed is the mapping of the results for every layer. There are currently two options, the 'godel' mapping uses prime number multiplication to encode the groups and subgroups an atom is classified into, while the 'linear' mapping does this by linear interpolation of a given layer based on the results obtained by the previous layer.
+A global parameter that can also be changed is the mapping of the results for every layer. There are currently three options, the 'default' mapping simply denotes each subcluster with an integer number starting from 0, for each cluster. The 'godel' mapping uses prime number multiplication to encode the groups and subgroups an atom is classified into. Finally, the 'linear' mapping does this by linear interpolation of a given layer based on the results obtained by the previous layer.
 
 The input file/s must be inside the same folder as the `main.py` file. Furthermore, the input file passed to the algorithm must have the LAMMPS dump format, or at least have a line with the following format:
 
