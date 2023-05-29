@@ -331,6 +331,22 @@ def map_to_cluster_godel(prev_id, layer, group):
     # Generate new id
     new_id = prev_id * (p_i ** group)
     return new_id
+
+
+def map_to_cluster_default(groups_df):
+    '''
+    Parameters
+    ----------
+    groups_df : pandas Series
+        Series containing the results of a secondary layer SOM prediction.
+    
+    Returns
+    -------
+    Returns the Series as it was given, this function is only used to allow
+    for a default mapping that matches the methodology of the other mappings.
+    '''
+    mapped_df = groups_df
+    return mapped_df
     
 
 # Check that the input is well specified
@@ -345,7 +361,7 @@ if len(PARAMS['file_list']) == 0 and PARAMS['search_pattern'] == '':
           ' search pattern must be specified')
     PASS = False
 # Mapping must either be godel or linear
-if not (PARAMS['mapping'] == 'godel' or PARAMS['mapping'] == 'linear'):
+if not (PARAMS['mapping'] in ['godel','linear','default']):
     print('Error: mapping must either be \'godel\' or \'linear\'')
     PASS = False
 # Check layer specs
@@ -479,7 +495,7 @@ if MAPPING == 'godel':
                                         prev_id=prev_id, layer=1, 
                                         group=k+1)
 
-elif MAPPING == 'linear':
+elif MAPPING == 'linear' or MAPPING == 'default':
     first_layer_mapping = {}
     for k in range(len(unique_groups)):
         first_layer_mapping[unique_groups[k]] = k
@@ -606,6 +622,10 @@ for i in range(len(LAYERS)-1):
                     c_id = cluster_id, 
                     c_next_id = next_cluster_id)
             
+            elif MAPPING == 'default':
+                final_cluster_groups = map_to_cluster_default(
+                    cluster_groups)
+
             # Add results to final DataFrame
             new_df.loc[new_df[prev_layer_name] ==\
                 cluster_id, [layer_name]] = final_cluster_groups
@@ -677,6 +697,12 @@ for i in range(len(LAYERS)-1):
                     use_int=True,
                     max_int=max_int,
                     min_int=min_int)
+
+    if MAPPING == 'default':
+        for j in range(len(found_clusters[i+1])):
+            for k in range(len(found_clusters[i+1][j])):
+                layer_mapped_found_clusters[j][k] = map_to_cluster_default(
+                    found_clusters[i+1][j][k])
                 
     # Finally, add these results to the mapped_found_clusters
     mapped_found_clusters.append(copy.deepcopy(layer_mapped_found_clusters))
@@ -738,7 +764,7 @@ if not len(files) == 0:
             mapped_groups = map_to_cluster_godel(prev_id=1, 
                                                  layer=1, 
                                                  group=groups+1)
-        elif MAPPING == 'linear':
+        elif MAPPING == 'linear' or MAPPING == 'default':
             mapped_groups = groups.map(first_layer_mapping)
             
         # Concat new DataFrame
@@ -819,6 +845,10 @@ if not len(files) == 0:
                             c_id = cluster_id, 
                             c_next_id = next_cluster_id,
                             N = len(found_clusters[i][j]))
+
+                    elif MAPPING == 'default':
+                        final_cluster_groups = map_to_cluster_default(
+                            cluster_groups)
                     
                     # Add results to final DataFrame
                     new_df.loc[new_df[prev_layer_name] ==\
